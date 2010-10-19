@@ -6,6 +6,10 @@
 VideoCell::VideoCell(int id)
 {
 	_id = id;
+	
+	_color.r = ofRandom(0, 255);
+	_color.g = ofRandom(0, 255);
+	_color.b = ofRandom(0, 255);
 }
 
 /* Load
@@ -33,7 +37,7 @@ void VideoCell::update(float x, float y)
 
 void VideoCell::draw(float ratioX, float ratioY)
 {
-	ofSetColor(255, 0, 0);
+	ofSetColor(_color.r, _color.g, _color.b);
 	ofRect(_pos.x * ratioX, _pos.y * ratioY, 100, 100);
 }
 

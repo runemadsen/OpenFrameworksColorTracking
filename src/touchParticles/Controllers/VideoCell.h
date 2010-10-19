@@ -21,4 +21,5 @@ private:
 	
 	int _id;
 	ofPoint _pos;
+	ofColor _color;
 };
