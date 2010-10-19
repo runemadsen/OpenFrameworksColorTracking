@@ -1,10 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "TouchController.h"
 #include "ofxVec2f.h"
 #include "Constants.h"
 #include "VideoCell.h"
+#include "Tools.h"
 
 class CellsController
 {

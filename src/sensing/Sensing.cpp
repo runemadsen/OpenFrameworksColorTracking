@@ -2,13 +2,18 @@
 
 Sensing::Sensing(ofxCvBlobListener * listener)
 {
-	disabled = true;
 	threshold = 0;
 	blurAmount = 0;
 	area = 100;
+	hueMargin = 12;
+	satMarginLow = 24;
+	satMarginHigh = 200;
+	
+	disabled = true;
 	show = false;
 	showGrabScreen = false;
 	maskToggle = false;
+	
 	vidGrabber.initGrabber( VIDEO_WIDTH, VIDEO_HEIGHT );
 	
 	trackColor.hue = 165;
@@ -21,7 +26,7 @@ Sensing::Sensing(ofxCvBlobListener * listener)
     satImg.allocate(VIDEO_WIDTH, VIDEO_HEIGHT);
     briImg.allocate(VIDEO_WIDTH, VIDEO_HEIGHT);
 	
-	colorTrackedPixelsRed = new unsigned char [VIDEO_WIDTH * VIDEO_HEIGHT]; 
+	grayPixels = new unsigned char [VIDEO_WIDTH * VIDEO_HEIGHT]; 
 	
 	grayImg.allocate( VIDEO_WIDTH, VIDEO_HEIGHT );
 	outputTexture.allocate(VIDEO_WIDTH, VIDEO_HEIGHT, GL_RGB);
@@ -29,8 +34,6 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 	mask.loadImage("mask.png");
 	mask.setImageType(OF_IMAGE_GRAYSCALE);
 	maskPixels = mask.getPixels();
-	
-	colorTrackedPixelsRed = new unsigned char [VIDEO_WIDTH * VIDEO_HEIGHT];
 	
     trackedTextureRed.allocate(VIDEO_WIDTH, VIDEO_HEIGHT, GL_LUMINANCE);
 	
@@ -40,6 +43,9 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 	gui.addSlider("Bluring", blurAmount , 0, 40);
 	gui.addContent("Difference", grayImg);
 	gui.addSlider("Area",area,10,6000);	
+	gui.addSlider("Hue Margin", hueMargin , 0, 40);
+	gui.addSlider("Sat Margin Low", satMarginLow , 0, 40);
+	gui.addSlider("Sat Margin High", satMarginHigh , 0, 500);
 	gui.addToggle("Mask", maskToggle);
 	gui.addToggle("Disabled", disabled);
 	gui.show();
@@ -79,22 +85,16 @@ void Sensing::update()
 		
 		for (int i = 0; i < VIDEO_WIDTH * VIDEO_HEIGHT; i++)
 		{                                          
-			if ((huePixels[i] >= trackColor.hue - 12 && huePixels[i] <= trackColor.hue + 12) &&    
-				(satPixels[i] >= trackColor.sat - 24 && satPixels[i] <= trackColor.sat + 200))
+			if ((huePixels[i] >= trackColor.hue - hueMargin && huePixels[i] <= trackColor.hue + hueMargin) &&    
+				(satPixels[i] >= trackColor.sat - satMarginLow && satPixels[i] <= trackColor.sat + satMarginHigh))
 			{    
-				colorTrackedPixelsRed[i] = 255;                                      
+				grayPixels[i] = 255;                                      
 			} 
 			else 
 			{
-				colorTrackedPixelsRed[i] = 0;                                        
+				grayPixels[i] = 0;                                        
 			}
 		}
-		
-		grayImg.setFromPixels(colorTrackedPixelsRed, VIDEO_WIDTH, VIDEO_HEIGHT);   
-		
-        grayImg.blur( blurAmount );
-        grayImg.threshold( threshold );
-		grayPixels = grayImg.getPixels();
 		
 		if (maskToggle) 
 		{
@@ -102,9 +102,12 @@ void Sensing::update()
 			{
 				grayPixels[i]=maskPixels[i]&&grayPixels[i]; 
 			}
-			
-			grayImg.setFromPixels(grayPixels, VIDEO_WIDTH,VIDEO_HEIGHT);
 		}
+		
+		grayImg.setFromPixels(grayPixels, VIDEO_WIDTH,VIDEO_HEIGHT);
+		
+		grayImg.blur( blurAmount );
+        grayImg.threshold( threshold );
         
 		//findContures( img, minSize, maxSize, nMax, inner contours yes/no )
         contourFinder.findContours( grayImg, area, 300000, 20, false);

@@ -11,6 +11,18 @@
         <name>Area</name>
         <value>100</value>
     </SliderInt_Area>
+    <SliderInt_Hue_Margin>
+        <name>Hue Margin</name>
+        <value>15</value>
+    </SliderInt_Hue_Margin>
+    <SliderInt_Sat_Margin_Low>
+        <name>Sat Margin Low</name>
+        <value>20</value>
+    </SliderInt_Sat_Margin_Low>
+    <SliderInt_Sat_Margin_High>
+        <name>Sat Margin High</name>
+        <value>162</value>
+    </SliderInt_Sat_Margin_High>
     <Toggle_Mask>
         <name>Mask</name>
         <value>0</value>

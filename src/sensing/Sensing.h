@@ -8,15 +8,7 @@
 #include "ofxFBOTexture.h"
 #include "ofxVec2f.h"
 #include "Constants.h"
-
-class color
-{
-public:
-	
-	float hue, sat;
-	
-	ofxVec2f pos;
-};
+#include "Tools.h"
 
 class Sensing  
 {
@@ -44,29 +36,31 @@ private:
 	int threshold;
 	int blurAmount;
 	int area;
+	int hueMargin;
+	int satMarginLow;
+	int satMarginHigh;
     
 	ofVideoGrabber  vidGrabber;
 	ofImage mask;
+	
+	ofxCvContourFinder  contourFinder;
+	ofxFBOTexture outputTexture;
     
 	ofxCvColorImage  colorImg;
-    ofxCvGrayscaleImage  grayImg;
-    ofxCvContourFinder  contourFinder;
-    
-	vector <ofxCvTrackedBlob> getBlobs();
-	
-	ofxFBOTexture outputTexture;
-	
-	unsigned char * maskPixels;
-	unsigned char * grayPixels;
-	
 	ofxCvColorImage		    colorImgHSV;
-	
+	ofxCvGrayscaleImage  grayImg;
 	ofxCvGrayscaleImage		hueImg;
 	ofxCvGrayscaleImage		satImg;
 	ofxCvGrayscaleImage     briImg;
 	
-	color                   trackColor;
+    
+	vector <ofxCvTrackedBlob> getBlobs();
 	
-	unsigned char *         colorTrackedPixelsRed;      //just some raw images which we are gonna put pixels into
+	unsigned char * maskPixels;
+	unsigned char * grayPixels;
+	
+	Color trackColor;
+	
+	
 	ofTexture               trackedTextureRed;          //color texture that we are gonna draw to
 };

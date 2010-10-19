@@ -43,7 +43,6 @@ void CellsController::blobOn(int blobid, vector <ofPoint> pts, ofPoint centroid)
 	VideoCell * cell = new VideoCell(blobid);
 	cell->update(centroid.x, centroid.y); // remember to scale
 	cells.push_back(cell);
-	cout << "Created new Cell" << endl;
 }
 
 void CellsController::blobMoved(int blobid, vector <ofPoint> pts, ofPoint centroid)
@@ -63,7 +62,7 @@ void CellsController::blobOff(int blobid)
 	{
 		if (cells[i]->getId() == blobid) 
 		{
-			// remove blob		
+			cells.erase (cells.begin()+i);	
 		}
 	}
 }
