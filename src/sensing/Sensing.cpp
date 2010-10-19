@@ -6,7 +6,7 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 	blurAmount = 0;
 	area = 100;
 	hueMargin = 12;
-	satMarginLow = 24;
+	satMarginLow = 100;
 	satMarginHigh = 200;
 	
 	disabled = true;
@@ -14,10 +14,8 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 	showGrabScreen = false;
 	maskToggle = false;
 	
-	vidGrabber.initGrabber( VIDEO_WIDTH, VIDEO_HEIGHT );
-	
-	trackColor.hue = 165;
-	trackColor.sat = 171;
+	trackColor.hue = 80;
+	trackColor.sat = 135;
 	
 	colorImg.allocate( VIDEO_WIDTH, VIDEO_HEIGHT );
 	colorImgHSV.allocate(VIDEO_WIDTH, VIDEO_HEIGHT);  
@@ -43,8 +41,8 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 	gui.addSlider("Bluring", blurAmount , 0, 40);
 	gui.addContent("Difference", grayImg);
 	gui.addSlider("Area",area,10,6000);	
-	gui.addSlider("Hue Margin", hueMargin , 0, 40);
-	gui.addSlider("Sat Margin Low", satMarginLow , 0, 40);
+	gui.addSlider("Hue Margin", hueMargin , 0, 200);
+	gui.addSlider("Sat Margin Low", satMarginLow , 0, 200);
 	gui.addSlider("Sat Margin High", satMarginHigh , 0, 500);
 	gui.addToggle("Mask", maskToggle);
 	gui.addToggle("Disabled", disabled);
@@ -58,6 +56,9 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 	}
 	
 	blobTracker.setListener(listener);
+	
+	vidGrabber.setDeviceID(6);
+	vidGrabber.initGrabber(VIDEO_WIDTH, VIDEO_HEIGHT );
 }
 
 void Sensing::update()
@@ -67,7 +68,7 @@ void Sensing::update()
 	if( vidGrabber.isFrameNew() ) 
 	{
         colorImg = vidGrabber.getPixels();
-        colorImg.mirror( false, true );
+        //colorImg.mirror( false, true );
 		
 		colorImgHSV = colorImg;                                                 
 		colorImgHSV.convertRgbToHsv();                                          
@@ -121,6 +122,7 @@ void Sensing::draw()
 	{
 		if(showGrabScreen)
 		{
+			ofSetColor(255, 255, 255);
 			colorImg.draw(0, 0);
 		}
 		else 

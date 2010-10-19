@@ -19,19 +19,22 @@ void VideoCell::load()
 /* Update
  ___________________________________________________________ */
 
-void VideoCell::update(int x, int y)
+void VideoCell::update(float x, float y)
 {	
-	_pos.x = x * ( (float) ofGetWidth() / (float) VIDEO_WIDTH );
-	_pos.y = y * ( (float) ofGetHeight() / (float) VIDEO_HEIGHT );
+	if(fabs(_pos.x - x) > MOVE_MARGIN || fabs(_pos.y - y) > MOVE_MARGIN)
+	{
+		_pos.x = x;
+		_pos.y = y;
+	}
 }
 
 /* Draw
  ___________________________________________________________ */
 
-void VideoCell::draw()
+void VideoCell::draw(float ratioX, float ratioY)
 {
 	ofSetColor(255, 0, 0);
-	ofRect(_pos.x, _pos.y, 100, 100);
+	ofRect(_pos.x * ratioX, _pos.y * ratioY, 100, 100);
 }
 
 int VideoCell::getId()

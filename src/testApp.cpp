@@ -18,8 +18,7 @@ void testApp::update()
 	for(int i = 0; i < sensing->blobTracker.blobs.size(); i++)
 	{
 		// if this ever fucks up, it's because ids arent the same as vector index
-		ofxCvTrackedBlob& blob = sensing->blobTracker.blobs[i];
-		cells->blobMoved(blob.id, blob.pts, blob.centroid);
+		cells->blobMoved(sensing->blobTracker.blobs[i]);
 	}
 	
 	cells->update();
@@ -29,6 +28,15 @@ void testApp::draw()
 {	
 	sensing->draw();
 	cells->draw();
+	
+	if(DEBUG)
+	{
+		string fpsStr = "frame rate: "+ofToString(ofGetFrameRate(), 2);
+		
+		ofSetColor(255, 255, 255);
+		
+		ofDrawBitmapString(fpsStr, 100,100);
+	}
 }
 
 void testApp::keyPressed( int key ) 
@@ -58,10 +66,8 @@ void testApp::mouseReleased() {}
 
 
 void testApp::blobOn( int x, int y, int id, int order ) 
-{
-	ofxCvTrackedBlob blob = sensing->blobTracker.getById(id);
-		
-	cells->blobOn(blob.id, blob.pts, blob.centroid);	
+{		
+	cells->blobOn(sensing->blobTracker.getById(id));	
 }
 
 void testApp::blobMoved( int x, int y, int id, int order)

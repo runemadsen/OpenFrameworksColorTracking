@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include "VideoCell.h"
 #include "Tools.h"
+#include "ofxCvTrackedBlob.h"
 
 class CellsController
 {
@@ -16,11 +17,14 @@ public:
 	void update();
 	void draw();
 	
-	void blobMoved(int blobid, vector <ofPoint> pts, ofPoint centroid);
-	void blobOn(int blobid, vector <ofPoint> pts, ofPoint centroid);
+	void blobMoved(ofxCvTrackedBlob& blob);
+	void blobOn(ofxCvTrackedBlob& blob);
 	void blobOff(int blobid);
 	
 private:
 	
-	vector <VideoCell *> cells;
+	vector <VideoCell *> _cells;
+	
+	float _ratioX;
+	float _ratioY;
 };

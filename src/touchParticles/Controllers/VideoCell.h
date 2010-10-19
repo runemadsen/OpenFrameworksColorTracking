@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "Constants.h"
 
+#define MOVE_MARGIN 0.5
+
 class VideoCell
 {
 public:
@@ -10,8 +12,8 @@ public:
 	VideoCell(int id);
 	
 	void load();
-	void update(int x, int y);
-	void draw();
+	void update(float x, float y);
+	void draw(float ratioX, float ratioY);
 	
 	int getId();
 	

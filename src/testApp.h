@@ -4,6 +4,7 @@
 #include "ofxCvConstants_Track.h"
 #include "Sensing.h"
 #include "CellsController.h"
+#include "Constants.h"
 
 class testApp : public ofSimpleApp, public ofxCvBlobListener 
 {
