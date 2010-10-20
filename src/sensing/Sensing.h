@@ -13,32 +13,6 @@
 class Sensing  
 {
 	
-	struct xsorter
-	{
-		bool operator()(ofxCvTrackedBlob a, ofxCvTrackedBlob b) const
-		{
-			if(a.centroid.x < b.centroid.x)
-			{
-				return true;
-			}
-			
-			return false;
-		}
-	};
-	
-	struct ysorter
-	{
-		bool operator()(ofxCvTrackedBlob a, ofxCvTrackedBlob b) const
-		{
-			if(a.centroid.y < b.centroid.y)
-			{
-				return true;
-			}
-			
-			return false;
-		}
-	};
-	
 public:
 	
 	Sensing(ofxCvBlobListener * listener);

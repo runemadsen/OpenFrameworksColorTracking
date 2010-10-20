@@ -9,6 +9,32 @@
 
 class CellsController
 {
+	struct xsorter
+	{
+		bool operator()(SortObject a, SortObject b) const
+		{
+			if(a.centroid.x < b.centroid.x)
+			{
+				return true;
+			}
+			
+			return false;
+		}
+	};
+	
+	struct ysorter
+	{
+		bool operator()(SortObject a, SortObject b) const
+		{
+			if(a.centroid.y < b.centroid.y)
+			{
+				return true;
+			}
+			
+			return false;
+		}
+	};
+	
 public:
 	
 	CellsController();
@@ -19,6 +45,8 @@ public:
 
 	void blobOn(ofxCvTrackedBlob& blob);
 	void blobOff(int blobid);
+	
+	void resetOrder();
 	
 private:
 	

@@ -29,7 +29,6 @@ void CellsController::update(vector <ofxCvTrackedBlob> blobs)
 		{
 			if (blobs[i].id == _cells[j]->getId()) 
 			{
-				_cells[j]->setOrder(i);
 				_cells[j]->update(blobs[i]);
 				
 				break;
@@ -37,6 +36,43 @@ void CellsController::update(vector <ofxCvTrackedBlob> blobs)
 		}
 	}
 }
+
+void CellsController::resetOrder()
+{
+	vector <SortObject> objects;
+	
+	for(int i = 0; i < _cells.size(); i++)
+	{
+		SortObject o;
+		o.centroid = _cells[i]->getCentroid();
+		o.id = _cells[i]->getId();
+		objects.push_back(o);
+	}
+	
+	if(objects.size() != GRID_SIZE)
+	{
+		cout << "You are trying to order the grid, but there are " << objects.size() << " blobs detected" << endl;
+	}
+	
+	// sort by y
+	std::sort(objects.begin(), objects.end(), CellsController::ysorter());
+	
+	// sort by x
+	std::sort(objects.begin(), objects.begin() + 2, CellsController::xsorter());
+	std::sort(objects.begin() + 3, objects.begin() + 5, CellsController::xsorter());
+	std::sort(objects.begin() + 6, objects.begin() + 8, CellsController::xsorter());
+	
+	for(int i = 0; i < objects.size(); i++)
+	{
+		for(int j = 0; j < _cells.size(); j++)
+		{
+			if(objects[i].id == _cells[j]->getId())
+			{
+				_cells[j]->setOrder(i + 1);
+			}
+		}
+	}
+}	
 
 void CellsController::updateRatio()
 {

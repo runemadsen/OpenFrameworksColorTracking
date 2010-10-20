@@ -39,6 +39,10 @@ void testApp::keyPressed( int key )
 	{
 		ofToggleFullscreen();
 	} 
+	else if (key == 'r')
+	{
+		cells->resetOrder();
+	}
 	else if (key == 't')
 	{
 		sensing->showGrabScreen = !sensing->showGrabScreen;

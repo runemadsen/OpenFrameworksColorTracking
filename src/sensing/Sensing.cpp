@@ -157,12 +157,6 @@ void Sensing::grabColorFromVideo(int x, int y)
 
 vector <ofxCvTrackedBlob> Sensing::getBlobs()
 {
-	// sort blobs here?
-	// it may slow down system to copy all blobs
-	//vector <ofxCvTrackedBlob> blobs = blobTracker.blobs;
-	//std::sort(blobs.begin(), blobs.end(), Sensing::xsorter());
-	//std::sort(blobs.begin(), blobs.end(), Sensing::ysorter());
-	
 	return blobTracker.blobs;
 }
 

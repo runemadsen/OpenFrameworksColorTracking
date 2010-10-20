@@ -19,6 +19,8 @@ public:
 	int getId();
 	void setOrder(int order);
 	
+	ofPoint getCentroid();
+	
 private:
 	
 	int _id;

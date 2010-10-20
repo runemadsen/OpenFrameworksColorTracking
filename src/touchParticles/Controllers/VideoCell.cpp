@@ -57,6 +57,11 @@ int VideoCell::getId()
 	return _id;
 }
 
+ofPoint VideoCell::getCentroid()
+{
+	return _centroid;
+}
+
 void VideoCell::setOrder(int order)
 {
 	_order = order;
