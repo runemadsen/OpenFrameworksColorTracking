@@ -14,14 +14,6 @@ VideoCell::VideoCell(ofxCvTrackedBlob & model)
 	_color.b = ofRandom(0, 255);
 }
 
-/* Load
- ___________________________________________________________ */
-
-void VideoCell::load()
-{	
-	// load videos into Cell model
-}
-
 /* Update
  ___________________________________________________________ */
 
@@ -35,12 +27,15 @@ void VideoCell::update(ofxCvTrackedBlob & model)
 }
 
 /* Draw
- ___________________________________________________________ */
+___________________________________________________________ */
 
 void VideoCell::draw(float ratioX, float ratioY)
 {
+	float x = _centroid.x * ratioX;
+	float y = _centroid.y * ratioY;
+	
 	ofSetColor(_color.r, _color.g, _color.b);
-	ofRect(_centroid.x * ratioX, _centroid.y * ratioY, 100, 100);
+	ofRect(x, y, 100, 100);
 	
 	if(DEBUG)
 	{		
@@ -48,9 +43,18 @@ void VideoCell::draw(float ratioX, float ratioY)
 		
 		string message = "Id: " + ofToString(_id, 0) + " Order: " + ofToString(_order, 0);
 		
-		ofDrawBitmapString(message, _centroid.x * ratioX, _centroid.y * ratioY);
+		ofDrawBitmapString(message, x, y);
 	}
+	
+	// draw video (remember to bind before (done in cellscontroller))
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, &_texCoords[0]);
+	ofQuad3D(x, y, 0, x + 100, y, 0, x + 100, y + 100, 0, x, y + 100, 0);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
+
+/* Other Getter / Setters
+ ___________________________________________________________ */
 
 int VideoCell::getId()
 {
@@ -65,4 +69,29 @@ ofPoint VideoCell::getCentroid()
 void VideoCell::setOrder(int order)
 {
 	_order = order;
+	
+	// use order to set position in video texture
+	
+	int col = _order % NUM_COLS;
+	int row = order / NUM_ROWS;
+	
+	int cellWidth = VIDEO_WIDTH / NUM_ROWS;
+	int cellHeight = VIDEO_HEIGHT / NUM_COLS;
+	
+	setTextureRect(row * cellWidth, col * cellHeight, cellWidth , cellHeight);
 }
+
+void VideoCell::setTextureRect(float x, float y, int w, int h)
+{
+	_texCoords[0] = x;
+	_texCoords[1] = y;
+	
+	_texCoords[2] = x + w;
+	_texCoords[3] = y;
+	
+	_texCoords[4] = x + w;
+	_texCoords[5] = y + h;
+	
+	_texCoords[6] = x;
+	_texCoords[7] = y + h;
+};

@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "Constants.h"
 #include "ofxCvTrackedBlob.h"
+#include "ofQuad.h"
 
 #define MOVE_MARGIN 0.5
 
@@ -12,7 +13,6 @@ public:
 	
 	VideoCell(ofxCvTrackedBlob & model);
 	
-	void load();
 	void update(ofxCvTrackedBlob & model);
 	void draw(float ratioX, float ratioY);
 	
@@ -25,8 +25,13 @@ private:
 	
 	int _id;
 	int _order;
+	ofColor _color;
+	
+	float _texCoords[8];
+	
+	// blob
 	ofRectangle _boundingRect;
 	ofPoint	_centroid;
-
-	ofColor _color;
+	
+	void setTextureRect(float x, float y, int w, int h);
 };

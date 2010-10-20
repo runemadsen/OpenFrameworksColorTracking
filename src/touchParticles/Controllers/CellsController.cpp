@@ -6,14 +6,9 @@
 CellsController::CellsController()
 {
 	updateRatio();
-}
-
-/* Load
- ___________________________________________________________ */
-
-void CellsController::load()
-{	
-
+	
+	_mov.loadMovie("fingers.mov");
+	_mov.play();
 }
 
 /* Update
@@ -25,7 +20,7 @@ void CellsController::update(vector <ofxCvTrackedBlob> blobs)
 	
 	for(int i = 0; i < blobs.size(); i++)
 	{
-		for(int j = 0; j < _cells.size(); j++)
+		for(int j = 0; j < GRID_SIZE; j++)
 		{
 			if (blobs[i].id == _cells[j]->getId()) 
 			{
@@ -35,9 +30,59 @@ void CellsController::update(vector <ofxCvTrackedBlob> blobs)
 			}
 		}
 	}
+}	
+
+void CellsController::updateRatio()
+{
+	_ratioX = (float) ofGetWidth() / (float) VIDEO_WIDTH;
+	_ratioY = (float) ofGetHeight() / (float) VIDEO_HEIGHT;
 }
 
-void CellsController::resetOrder()
+/* Draw
+ ___________________________________________________________ */
+
+void CellsController::draw()
+{
+	_mov.getTextureReference().bind();
+	
+	for(int i = 0; i < _cells.size(); i++)
+	{
+		_cells[i]->draw(_ratioX, _ratioY);
+	}
+	
+	_mov.getTextureReference().unbind();
+}
+
+/* Blob Events
+ ___________________________________________________________ */
+
+void CellsController::blobOn(ofxCvTrackedBlob& blob)
+{
+	VideoCell * cell = new VideoCell(blob);
+	_cells.push_back(cell);
+}
+
+void CellsController::blobOff(int blobid)
+{
+	for(int i = 0; i < _cells.size(); i++)
+	{
+		if (_cells[i]->getId() == blobid) 
+		{
+			_cells.erase (_cells.begin()+i);	
+		}
+	}
+}
+
+/* Reset
+ ___________________________________________________________ */
+
+
+void CellsController::assignBlobsToCells()
+{
+	findOrder();
+}
+
+void CellsController::findOrder()
 {
 	vector <SortObject> objects;
 	
@@ -68,47 +113,8 @@ void CellsController::resetOrder()
 		{
 			if(objects[i].id == _cells[j]->getId())
 			{
-				_cells[j]->setOrder(i + 1);
+				_cells[j]->setOrder(i);
 			}
-		}
-	}
-}	
-
-void CellsController::updateRatio()
-{
-	_ratioX = (float) ofGetWidth() / (float) VIDEO_WIDTH;
-	_ratioY = (float) ofGetHeight() / (float) VIDEO_HEIGHT;
-}
-
-/* Draw
- ___________________________________________________________ */
-
-void CellsController::draw()
-{
-	for(int i = 0; i < _cells.size(); i++)
-	{
-		_cells[i]->draw(_ratioX, _ratioY);
-	}
-}
-
-/* Blob Events
- ___________________________________________________________ */
-
-
-void CellsController::blobOn(ofxCvTrackedBlob& blob)
-{
-	VideoCell * cell = new VideoCell(blob);
-	cell->load();
-	_cells.push_back(cell);
-}
-
-void CellsController::blobOff(int blobid)
-{
-	for(int i = 0; i < _cells.size(); i++)
-	{
-		if (_cells[i]->getId() == blobid) 
-		{
-			_cells.erase (_cells.begin()+i);	
 		}
 	}
 }

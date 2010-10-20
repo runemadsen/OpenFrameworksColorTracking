@@ -39,16 +39,17 @@ public:
 	
 	CellsController();
 	
-	void load();
 	void update(vector <ofxCvTrackedBlob> blobs);
 	void draw();
 
 	void blobOn(ofxCvTrackedBlob& blob);
 	void blobOff(int blobid);
 	
-	void resetOrder();
+	void assignBlobsToCells();
 	
 private:
+	
+	void findOrder();
 	
 	void updateRatio();
 	
@@ -56,4 +57,6 @@ private:
 	
 	float _ratioX;
 	float _ratioY;
+	
+	ofVideoPlayer _mov;
 };

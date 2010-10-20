@@ -8,7 +8,6 @@ void testApp::setup()
 	sensing = new Sensing(this);
 	
 	cells = new CellsController();
-	cells->load();
 }
 
 void testApp::update() 
@@ -39,9 +38,9 @@ void testApp::keyPressed( int key )
 	{
 		ofToggleFullscreen();
 	} 
-	else if (key == 'r')
+	else if (key == 'a')
 	{
-		cells->resetOrder();
+		cells->assignBlobsToCells();
 	}
 	else if (key == 't')
 	{
