@@ -6,6 +6,7 @@
 #include "VideoCell.h"
 #include "Tools.h"
 #include "ofxCvTrackedBlob.h"
+#include "Sensing.h"
 
 class CellsController
 {

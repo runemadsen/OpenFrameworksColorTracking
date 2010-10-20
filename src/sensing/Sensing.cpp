@@ -1,6 +1,22 @@
 #include "Sensing.h"
 
-Sensing::Sensing(ofxCvBlobListener * listener)
+/* Singleton stuff
+ ___________________________________________________________ */
+
+Sensing * Sensing::m_pInstance = NULL;
+
+Sensing * Sensing::getInstance()
+{
+	if (!m_pInstance)   // Only allow one instance of class to be generated.
+		m_pInstance = new Sensing;
+	
+	return m_pInstance;
+}
+
+/* Constructor
+ ___________________________________________________________ */
+
+Sensing::Sensing()
 {
 	threshold = 0;
 	blurAmount = 0;
@@ -9,10 +25,15 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 	satMarginLow = 100;
 	satMarginHigh = 200;
 	
-	disabled = true;
+	cellWidth = 100;
+	cellHeight = 100;
+	cellMarginX = 0;
+	cellMarginY = 0;
+	
 	show = false;
 	showGrabScreen = false;
 	maskToggle = false;
+	debugToggle = false;
 	
 	trackColor.hue = 80;
 	trackColor.sat = 135;
@@ -45,7 +66,11 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 	gui.addSlider("Sat Margin Low", satMarginLow , 0, 200);
 	gui.addSlider("Sat Margin High", satMarginHigh , 0, 500);
 	gui.addToggle("Mask", maskToggle);
-	gui.addToggle("Disabled", disabled);
+	gui.addToggle("Debug", debugToggle);
+	gui.addSlider("Cell Width", cellWidth , 50, 500);
+	gui.addSlider("Cell Height", cellHeight , 50, 500);
+	gui.addSlider("Cell Margin X", cellMarginX , -200, 400);
+	gui.addSlider("Cell Margin Y", cellMarginY , -200, 400);
 	gui.show();
 	
 	for (int i=0; i<VIDEO_WIDTH*VIDEO_HEIGHT; i++) 
@@ -55,11 +80,20 @@ Sensing::Sensing(ofxCvBlobListener * listener)
 		} 
 	}
 	
-	blobTracker.setListener(listener);
-	
 	vidGrabber.setDeviceID(6);
 	vidGrabber.initGrabber(VIDEO_WIDTH, VIDEO_HEIGHT );
 }
+
+/* Set listener
+ ___________________________________________________________ */
+
+void Sensing::setListener(ofxCvBlobListener * listener)
+{
+	blobTracker.setListener(listener);
+}
+
+/* Update
+ ___________________________________________________________ */
 
 void Sensing::update()
 {
@@ -116,6 +150,9 @@ void Sensing::update()
     }
 }
 
+/* Draw
+ ___________________________________________________________ */
+
 void Sensing::draw()
 {	
 	if (show) 
@@ -131,12 +168,15 @@ void Sensing::draw()
 			
 			outputTexture.begin();
 			ofSetColor( 0xffffff );
-			colorImg.draw( 0,0 );
+			colorImg.draw(0, 0);
 			blobTracker.draw(0, 0);
 			outputTexture.end();
 		}
 	}
 }
+
+/* Grab color fro video
+ ___________________________________________________________ */
 
 void Sensing::grabColorFromVideo(int x, int y)
 {
@@ -155,8 +195,36 @@ void Sensing::grabColorFromVideo(int x, int y)
 	}
 }
 
+/* Getter / Setter
+ ___________________________________________________________ */
+
 vector <ofxCvTrackedBlob> Sensing::getBlobs()
 {
 	return blobTracker.blobs;
+}
+
+bool Sensing::debug()
+{
+	return debugToggle;
+}
+
+int Sensing::getCellWidth()
+{
+	return cellWidth;
+}
+
+int Sensing::getCellHeight()
+{
+	return cellHeight;
+}
+
+int Sensing::getCellMarginX()
+{
+	return cellMarginX;
+}
+
+int Sensing::getCellMarginY()
+{
+	return cellMarginY;
 }
 

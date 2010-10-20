@@ -4,25 +4,26 @@ void testApp::setup()
 {
 	ofSetFrameRate(60);
 	ofBackground( 0, 0, 0 );
-	
-	sensing = new Sensing(this);
+
+	Sensing::getInstance()->setListener(this);
 	
 	cells = new CellsController();
 }
 
 void testApp::update() 
 {	
-	sensing->update();
+	Sensing::getInstance()->update();
 	
-	cells->update(sensing->blobTracker.blobs);
+	cells->update(Sensing::getInstance()->blobTracker.blobs);
 }
 
 void testApp::draw() 
 {	
-	sensing->draw();
 	cells->draw();
 	
-	if(DEBUG)
+	Sensing::getInstance()->draw();
+	
+	if(Sensing::getInstance()->debug())
 	{
 		string fpsStr = "frame rate: "+ofToString(ofGetFrameRate(), 2);
 		
@@ -44,11 +45,11 @@ void testApp::keyPressed( int key )
 	}
 	else if (key == 't')
 	{
-		sensing->showGrabScreen = !sensing->showGrabScreen;
+		Sensing::getInstance()->showGrabScreen = !Sensing::getInstance()->showGrabScreen;
 	}
 	else if (key ==' ')
 	{
-		sensing->show =! sensing->show;
+		Sensing::getInstance()->show =! Sensing::getInstance()->show;
 	}
 }
 
@@ -56,7 +57,7 @@ void testApp::mouseMoved( int x, int y ) {}
 void testApp::mouseDragged( int x, int y, int button ) {}
 void testApp::mousePressed( int x, int y, int button ) 
 {
-	sensing->grabColorFromVideo(x, y);
+	Sensing::getInstance()->grabColorFromVideo(x, y);
 }
 
 void testApp::mouseReleased() {}
@@ -64,7 +65,7 @@ void testApp::mouseReleased() {}
 
 void testApp::blobOn( int x, int y, int id, int order ) 
 {		
-	cells->blobOn(sensing->blobTracker.getById(id));	
+	cells->blobOn(Sensing::getInstance()->blobTracker.getById(id));	
 }
 
 void testApp::blobMoved( int x, int y, int id, int order)

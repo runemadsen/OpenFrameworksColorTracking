@@ -24,7 +24,6 @@ class testApp : public ofSimpleApp, public ofxCvBlobListener
     void blobMoved( int x, int y, int id, int order );
     void blobOff( int x, int y, int id, int order );
 	
-	Sensing * sensing;
 	CellsController * cells;
 };
 

@@ -51,6 +51,14 @@ void CellsController::draw()
 	}
 	
 	_mov.getTextureReference().unbind();
+	
+	if(Sensing::getInstance()->debug())
+	{
+		for(int i = 0; i < _cells.size(); i++)
+		{
+			_cells[i]->drawDebug(_ratioX, _ratioY);
+		}
+	}
 }
 
 /* Blob Events

@@ -31,26 +31,29 @@ ___________________________________________________________ */
 
 void VideoCell::draw(float ratioX, float ratioY)
 {
-	float x = _centroid.x * ratioX;
-	float y = _centroid.y * ratioY;
-	
-	ofSetColor(_color.r, _color.g, _color.b);
-	ofRect(x, y, 100, 100);
-	
-	if(DEBUG)
-	{		
-		ofSetColor(255, 255, 255);
-		
-		string message = "Id: " + ofToString(_id, 0) + " Order: " + ofToString(_order, 0);
-		
-		ofDrawBitmapString(message, x, y);
-	}
+	float x = (_centroid.x * ratioX) + Sensing::getInstance()->getCellMarginX();
+	float y = _centroid.y * ratioY + Sensing::getInstance()->getCellMarginY();
 	
 	// draw video (remember to bind before (done in cellscontroller))
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glTexCoordPointer(2, GL_FLOAT, 0, &_texCoords[0]);
-	ofQuad3D(x, y, 0, x + 100, y, 0, x + 100, y + 100, 0, x, y + 100, 0);
+	ofQuad3D(x, y, 0, x + Sensing::getInstance()->getCellWidth(), y, 0, x + Sensing::getInstance()->getCellWidth(), y + Sensing::getInstance()->getCellHeight(), 0, x, y + Sensing::getInstance()->getCellHeight(), 0);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void VideoCell::drawDebug(float ratioX, float ratioY)
+{
+	float x = (_centroid.x * ratioX) + Sensing::getInstance()->getCellMarginX();
+	float y = _centroid.y * ratioY + Sensing::getInstance()->getCellMarginY();
+	
+	ofSetColor(_color.r, _color.g, _color.b);
+	ofRect(x, y, 10, 10);
+	
+	ofSetColor(255, 255, 255);
+	
+	string message = "Id: " + ofToString(_id, 0) + " Order: " + ofToString(_order, 0);
+	
+	ofDrawBitmapString(message, x, y);
 }
 
 /* Other Getter / Setters

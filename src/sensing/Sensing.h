@@ -15,23 +15,36 @@ class Sensing
 	
 public:
 	
-	Sensing(ofxCvBlobListener * listener);
+	static Sensing * getInstance();
 	
 	void update();
 	void draw();
 	
 	bool show;
-	bool disabled;
 	bool showGrabScreen;
 	
 	ofxCvBlobTracker  blobTracker;	
 	
 	void grabColorFromVideo(int x, int y);
 	
+	void setListener(ofxCvBlobListener * listener);
+	bool debug();
+	
+	int getCellWidth();
+	int getCellHeight();
+	int getCellMarginX();
+	int getCellMarginY();
+	
 private:
 	
-	
+	// singleton stuff
+	Sensing();  // Private so that it can  not be called
+	Sensing(Sensing const&){};             // copy constructor is private
+	Sensing& operator=(Sensing const&){};  // assignment operator is private
+	static Sensing* m_pInstance;
+		
 	bool maskToggle;
+	bool debugToggle;
 	
 	int threshold;
 	int blurAmount;
@@ -39,6 +52,11 @@ private:
 	int hueMargin;
 	int satMarginLow;
 	int satMarginHigh;
+	
+	int cellWidth;
+	int cellHeight;
+	int cellMarginX;
+	int cellMarginY;
     
 	ofVideoGrabber  vidGrabber;
 	ofImage mask;
@@ -60,7 +78,6 @@ private:
 	unsigned char * grayPixels;
 	
 	Color trackColor;
-	
 	
 	ofTexture               trackedTextureRed;          //color texture that we are gonna draw to
 };

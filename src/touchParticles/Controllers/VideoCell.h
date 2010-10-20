@@ -4,6 +4,7 @@
 #include "Constants.h"
 #include "ofxCvTrackedBlob.h"
 #include "ofQuad.h"
+#include "Sensing.h"
 
 #define MOVE_MARGIN 0.5
 
@@ -15,6 +16,7 @@ public:
 	
 	void update(ofxCvTrackedBlob & model);
 	void draw(float ratioX, float ratioY);
+	void drawDebug(float ratioX, float ratioY);
 	
 	int getId();
 	void setOrder(int order);

@@ -27,8 +27,24 @@
         <name>Mask</name>
         <value>0</value>
     </Toggle_Mask>
-    <Toggle_Disabled>
-        <name>Disabled</name>
-        <value>1</value>
-    </Toggle_Disabled>
+    <Toggle_Debug>
+        <name>Debug</name>
+        <value>0</value>
+    </Toggle_Debug>
+    <SliderInt_Cell_Width>
+        <name>Cell Width</name>
+        <value>183</value>
+    </SliderInt_Cell_Width>
+    <SliderInt_Cell_Height>
+        <name>Cell Height</name>
+        <value>199</value>
+    </SliderInt_Cell_Height>
+    <SliderInt_Cell_Margin_X>
+        <name>Cell Margin X</name>
+        <value>-7</value>
+    </SliderInt_Cell_Margin_X>
+    <SliderInt_Cell_Margin_Y>
+        <name>Cell Margin Y</name>
+        <value>8</value>
+    </SliderInt_Cell_Margin_Y>
 </controls>
