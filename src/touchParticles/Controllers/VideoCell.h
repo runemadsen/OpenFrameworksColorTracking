@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Constants.h"
+#include "ofxCvTrackedBlob.h"
 
 #define MOVE_MARGIN 0.5
 
@@ -9,17 +10,21 @@ class VideoCell
 {
 public:
 	
-	VideoCell(int id);
+	VideoCell(ofxCvTrackedBlob & model);
 	
 	void load();
-	void update(float x, float y);
+	void update(ofxCvTrackedBlob & model);
 	void draw(float ratioX, float ratioY);
 	
 	int getId();
+	void setOrder(int order);
 	
 private:
 	
 	int _id;
-	ofPoint _pos;
+	int _order;
+	ofRectangle _boundingRect;
+	ofPoint	_centroid;
+
 	ofColor _color;
 };

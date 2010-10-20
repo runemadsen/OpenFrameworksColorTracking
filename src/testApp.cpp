@@ -15,13 +15,7 @@ void testApp::update()
 {	
 	sensing->update();
 	
-	for(int i = 0; i < sensing->blobTracker.blobs.size(); i++)
-	{
-		// if this ever fucks up, it's because ids arent the same as vector index
-		cells->blobMoved(sensing->blobTracker.blobs[i]);
-	}
-	
-	cells->update();
+	cells->update(sensing->blobTracker.blobs);
 }
 
 void testApp::draw() 
@@ -35,7 +29,7 @@ void testApp::draw()
 		
 		ofSetColor(255, 255, 255);
 		
-		ofDrawBitmapString(fpsStr, 100,100);
+		ofDrawBitmapString(fpsStr, 10, 10);
 	}
 }
 
@@ -74,6 +68,7 @@ void testApp::blobMoved( int x, int y, int id, int order)
 {
 	
 }
+
 void testApp::blobOff( int x, int y, int id, int order ) 
 {	
 	cells->blobOff(id);

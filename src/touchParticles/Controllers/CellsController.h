@@ -14,14 +14,15 @@ public:
 	CellsController();
 	
 	void load();
-	void update();
+	void update(vector <ofxCvTrackedBlob> blobs);
 	void draw();
-	
-	void blobMoved(ofxCvTrackedBlob& blob);
+
 	void blobOn(ofxCvTrackedBlob& blob);
 	void blobOff(int blobid);
 	
 private:
+	
+	void updateRatio();
 	
 	vector <VideoCell *> _cells;
 	
