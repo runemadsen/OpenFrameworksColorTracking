@@ -32,8 +32,11 @@ public:
 	
 	int getCellWidth();
 	int getCellHeight();
-	int getCellMarginX();
-	int getCellMarginY();
+	
+	float getRatioX() { return ratioX; }
+	float getRatioY() { return ratioY; }
+	float getDisplaceX() { return displaceX; }
+	float getDisplaceY() { return displaceY; }
 	
 private:
 	
@@ -57,6 +60,11 @@ private:
 	int cellHeight;
 	int cellMarginX;
 	int cellMarginY;
+	
+	float ratioX;
+	float ratioY;
+	float displaceX;
+	float displaceY;
     
 	ofVideoGrabber  vidGrabber;
 	ofImage mask;

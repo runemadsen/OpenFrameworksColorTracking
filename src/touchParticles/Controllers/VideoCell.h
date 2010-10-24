@@ -15,8 +15,8 @@ public:
 	VideoCell(ofxCvTrackedBlob & model);
 	
 	void update(ofxCvTrackedBlob & model);
-	void draw(float ratioX, float ratioY);
-	void drawDebug(float ratioX, float ratioY);
+	void draw();
+	void drawDebug();
 	
 	int getId();
 	void setOrder(int order);

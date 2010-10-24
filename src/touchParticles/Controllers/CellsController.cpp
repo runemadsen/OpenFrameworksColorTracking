@@ -47,7 +47,7 @@ void CellsController::draw()
 	
 	for(int i = 0; i < _cells.size(); i++)
 	{
-		_cells[i]->draw(_ratioX, _ratioY);
+		_cells[i]->draw();
 	}
 	
 	_mov.getTextureReference().unbind();
@@ -56,7 +56,7 @@ void CellsController::draw()
 	{
 		for(int i = 0; i < _cells.size(); i++)
 		{
-			_cells[i]->drawDebug(_ratioX, _ratioY);
+			_cells[i]->drawDebug();
 		}
 	}
 }

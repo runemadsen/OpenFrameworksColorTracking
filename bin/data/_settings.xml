@@ -33,18 +33,26 @@
     </Toggle_Debug>
     <SliderInt_Cell_Width>
         <name>Cell Width</name>
-        <value>183</value>
+        <value>100</value>
     </SliderInt_Cell_Width>
     <SliderInt_Cell_Height>
         <name>Cell Height</name>
-        <value>199</value>
+        <value>100</value>
     </SliderInt_Cell_Height>
-    <SliderInt_Cell_Margin_X>
-        <name>Cell Margin X</name>
-        <value>-7</value>
-    </SliderInt_Cell_Margin_X>
-    <SliderInt_Cell_Margin_Y>
-        <name>Cell Margin Y</name>
-        <value>8</value>
-    </SliderInt_Cell_Margin_Y>
+    <SliderFloat_ratioX>
+        <name>ratioX</name>
+        <value>5.763672</value>
+    </SliderFloat_ratioX>
+    <SliderFloat_ratioY>
+        <name>ratioY</name>
+        <value>2.712891</value>
+    </SliderFloat_ratioY>
+    <SliderFloat_Displace_Origin_X>
+        <name>Displace Origin X</name>
+        <value>87.500000</value>
+    </SliderFloat_Displace_Origin_X>
+    <SliderFloat_Displace_Origin_Y>
+        <name>Displace Origin Y</name>
+        <value>256.250000</value>
+    </SliderFloat_Displace_Origin_Y>
 </controls>

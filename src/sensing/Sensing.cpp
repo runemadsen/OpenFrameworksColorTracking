@@ -30,6 +30,11 @@ Sensing::Sensing()
 	cellMarginX = 0;
 	cellMarginY = 0;
 	
+	ratioX = 1.5;
+	ratioY = 1.5;
+	displaceX = 0;
+	displaceY = 0;
+	
 	show = false;
 	showGrabScreen = false;
 	maskToggle = false;
@@ -69,8 +74,11 @@ Sensing::Sensing()
 	gui.addToggle("Debug", debugToggle);
 	gui.addSlider("Cell Width", cellWidth , 50, 500);
 	gui.addSlider("Cell Height", cellHeight , 50, 500);
-	gui.addSlider("Cell Margin X", cellMarginX , -200, 400);
-	gui.addSlider("Cell Margin Y", cellMarginY , -200, 400);
+	
+	gui.addSlider("ratioX", ratioX , 0.5, 6.0);
+	gui.addSlider("ratioY", ratioY , 0.5, 6.0);
+	gui.addSlider("Displace Origin X", displaceX , -800, 800);
+	gui.addSlider("Displace Origin Y", displaceY , -800, 800);
 	gui.show();
 	
 	for (int i=0; i<VIDEO_WIDTH*VIDEO_HEIGHT; i++) 
@@ -216,15 +224,5 @@ int Sensing::getCellWidth()
 int Sensing::getCellHeight()
 {
 	return cellHeight;
-}
-
-int Sensing::getCellMarginX()
-{
-	return cellMarginX;
-}
-
-int Sensing::getCellMarginY()
-{
-	return cellMarginY;
 }
 

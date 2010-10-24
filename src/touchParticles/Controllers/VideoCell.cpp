@@ -29,10 +29,13 @@ void VideoCell::update(ofxCvTrackedBlob & model)
 /* Draw
 ___________________________________________________________ */
 
-void VideoCell::draw(float ratioX, float ratioY)
+void VideoCell::draw()
 {
-	float x = (_centroid.x * ratioX) + Sensing::getInstance()->getCellMarginX();
-	float y = _centroid.y * ratioY + Sensing::getInstance()->getCellMarginY();
+	float x = _centroid.x * Sensing::getInstance()->getRatioX();
+	float y = _centroid.y * Sensing::getInstance()->getRatioY();
+	
+	x += Sensing::getInstance()->getDisplaceX();
+	y += Sensing::getInstance()->getDisplaceY();
 	
 	// draw video (remember to bind before (done in cellscontroller))
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -41,10 +44,13 @@ void VideoCell::draw(float ratioX, float ratioY)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-void VideoCell::drawDebug(float ratioX, float ratioY)
+void VideoCell::drawDebug()
 {
-	float x = (_centroid.x * ratioX) + Sensing::getInstance()->getCellMarginX();
-	float y = _centroid.y * ratioY + Sensing::getInstance()->getCellMarginY();
+	float x = _centroid.x * Sensing::getInstance()->getRatioX();
+	float y = _centroid.y * Sensing::getInstance()->getRatioY();
+	
+	x += Sensing::getInstance()->getDisplaceX();
+	y += Sensing::getInstance()->getDisplaceY();
 	
 	ofSetColor(_color.r, _color.g, _color.b);
 	ofRect(x, y, 10, 10);
