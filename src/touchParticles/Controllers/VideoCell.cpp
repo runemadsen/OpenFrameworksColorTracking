@@ -31,11 +31,16 @@ ___________________________________________________________ */
 
 void VideoCell::draw()
 {
-	float x = _centroid.x * Sensing::getInstance()->getRatioX();
-	float y = _centroid.y * Sensing::getInstance()->getRatioY();
+	float x = _boundingRect.x * Sensing::getInstance()->getRatioX() + Sensing::getInstance()->getDisplaceX();
+	float y = _boundingRect.y * Sensing::getInstance()->getRatioY() + Sensing::getInstance()->getDisplaceY();
+
+	float w =  _boundingRect.width * Sensing::getInstance()->getRatioX();
+	float h = _boundingRect.height * Sensing::getInstance()->getRatioY();
 	
-	x += Sensing::getInstance()->getDisplaceX();
-	y += Sensing::getInstance()->getDisplaceY();
+	x += w;
+	y += h;
+	
+	ofFill();
 	
 	// draw video (remember to bind before (done in cellscontroller))
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -45,22 +50,17 @@ void VideoCell::draw()
 }
 
 void VideoCell::drawDebug()
-{
-	float x = _centroid.x * Sensing::getInstance()->getRatioX();
-	float y = _centroid.y * Sensing::getInstance()->getRatioY();
+{	
+	float x = _boundingRect.x * Sensing::getInstance()->getRatioX() + Sensing::getInstance()->getDisplaceX();
+	float y = _boundingRect.y * Sensing::getInstance()->getRatioY() + Sensing::getInstance()->getDisplaceY();
 	
-	x += Sensing::getInstance()->getDisplaceX();
-	y += Sensing::getInstance()->getDisplaceY();
+	float w =  _boundingRect.width * Sensing::getInstance()->getRatioX();
+	float h = _boundingRect.height * Sensing::getInstance()->getRatioY();
 	
-	ofFill();
-	ofSetColor(255, 255, 255);
-	ofRect(x, y, 10, 10);
-	
-	ofSetColor(255, 255, 255);
 	ofNoFill();
-	ofRect(x, y, Sensing::getInstance()->getCellWidth(), Sensing::getInstance()->getCellHeight());
-	
 	ofSetColor(255, 255, 255);
+	ofRect(x, y, w, h);
+	ofRect(x + w, y + h, Sensing::getInstance()->getCellWidth(), Sensing::getInstance()->getCellHeight());
 	
 	string message = "Id: " + ofToString(_id, 0) + " Order: " + ofToString(_cellNum, 0);
 	

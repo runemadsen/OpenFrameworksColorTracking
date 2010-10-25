@@ -63,6 +63,10 @@ void testApp::keyPressed( int key )
 	{
 		Sensing::getInstance()->show =! Sensing::getInstance()->show;
 	}
+	else if(key == 'p')
+	{
+		Sensing::getInstance()->printConfig();
+	}
 }
 
 void testApp::mouseMoved( int x, int y ) {}

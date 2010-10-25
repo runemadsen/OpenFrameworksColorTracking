@@ -40,6 +40,8 @@ public:
 	
 	void calibrateVar(string variable, float addNum);
 	
+	void printConfig();
+	
 private:
 	
 	// singleton stuff

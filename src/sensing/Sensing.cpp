@@ -24,20 +24,18 @@ Sensing::Sensing()
 	hueMargin = 15;
 	satMarginLow = 50;
 	satMarginHigh = 170;
-	
-	cellWidth = 100;
-	cellHeight = 100;
+	cellWidth = 197;
+	cellHeight = 198;
 	cellMarginX = 0;
 	cellMarginY = 0;
-	
 	ratioX = 2.54;
-	ratioY = 2.59;
-	displaceX = 10;
-	displaceY = -15;
+	ratioY = 2.55;
+	displaceX = 0;
+	displaceY = -62;
 	
 	show = false;
 	showGrabScreen = false;
-	maskToggle = false;
+	maskToggle = true;
 	debugToggle = false;
 	
 	trackColor.hue = 80;
@@ -235,5 +233,25 @@ void Sensing::calibrateVar(string variable, float addNum)
 	else if(variable == "ratioy")	ratioY += addNum;
 	else if(variable == "cellwidth")	cellWidth += addNum;
 	else if(variable == "cellheight")	cellHeight += addNum;
+}
+
+void Sensing::printConfig()
+{
+	cout << "threshold = " << threshold << endl;
+	cout << "blurAmount = " << blurAmount << endl;
+	cout << "area = " << area << endl;
+	cout << "hueMargin = " << hueMargin << endl;
+	cout << "satMarginLow = " << satMarginLow << endl;
+	cout << "satMarginHigh = " << satMarginHigh << endl;
+	
+	cout << "cellWidth = " << cellWidth << endl;
+	cout << "cellHeight = " << cellHeight << endl;
+	cout << "cellMarginX = " << cellMarginX << endl;
+	cout << "cellMarginY = " << cellMarginY << endl;
+	
+	cout << "ratioX = " << ratioX << endl;
+	cout << "ratioY = " << ratioY << endl;
+	cout << "displaceX = " << displaceX << endl;
+	cout << "displaceY = " << displaceY << endl;
 }
 
