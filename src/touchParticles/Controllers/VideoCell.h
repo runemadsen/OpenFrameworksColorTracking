@@ -20,6 +20,7 @@ public:
 	
 	int getId();
 	void setCellNum(int order);
+	int getCellNum() { return _cellNum; }
 	
 	ofPoint getCentroid();
 	

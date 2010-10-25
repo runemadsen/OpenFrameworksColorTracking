@@ -20,7 +20,7 @@ void CellsController::update(vector <ofxCvTrackedBlob> blobs)
 	
 	for(int i = 0; i < blobs.size(); i++)
 	{
-		for(int j = 0; j < GRID_SIZE; j++)
+		for(int j = 0; j < _cells.size(); j++)
 		{
 			if (blobs[i].id == _cells[j]->getId()) 
 			{
@@ -66,8 +66,35 @@ void CellsController::draw()
 
 void CellsController::blobOn(ofxCvTrackedBlob& blob)
 {
-	VideoCell * cell = new VideoCell(blob);
-	_cells.push_back(cell);
+	if(_cells.size() < NUM_CELLS)
+	{
+		VideoCell * cell = new VideoCell(blob);
+		
+		// loop through cell nums
+		for(int i = 0; i < NUM_CELLS; i++)
+		{
+			bool isThere = false;
+			
+			// loop through cells
+			for(int j = 0; j < _cells.size(); j++)
+			{
+				if(i == _cells[j]->getCellNum())
+				{
+					isThere = true;
+					break;
+				}
+			}
+			
+			// if cellnum is now in cells already
+			if(!isThere)
+			{
+				cell->setCellNum(i);
+				break;
+			}
+		}
+		
+		_cells.push_back(cell);
+	}
 }
 
 void CellsController::blobOff(int blobid)
