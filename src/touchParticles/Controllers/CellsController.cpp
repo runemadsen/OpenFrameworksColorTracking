@@ -59,6 +59,10 @@ void CellsController::draw()
 			_cells[i]->drawDebug();
 		}
 	}
+	
+	// draw rectangle grid
+	
+	
 }
 
 /* Blob Events

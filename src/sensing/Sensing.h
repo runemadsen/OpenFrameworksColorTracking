@@ -38,6 +38,11 @@ public:
 	float getDisplaceX() { return displaceX; }
 	float getDisplaceY() { return displaceY; }
 	
+	float getGridWidth() { return gridWidth; }
+	float getGridHeight() { return gridHeight; }
+	float getGridX() { return gridX; }
+	float getGridY() { return gridY; }
+	
 	void calibrateVar(string variable, float addNum);
 	
 	void printConfig();
@@ -56,9 +61,11 @@ private:
 	int threshold;
 	int blurAmount;
 	int area;
-	int hueMargin;
-	int satMarginLow;
+	int hueMarginLow;
 	int satMarginHigh;
+	int satMarginHigh;
+	int briMarginLow;
+	int briMarginHigh;
 	
 	int cellWidth;
 	int cellHeight;
@@ -69,6 +76,11 @@ private:
 	float ratioY;
 	float displaceX;
 	float displaceY;
+	
+	float gridWidth;
+	float gridHeight;
+	float gridX;
+	float gridY;
     
 	ofVideoGrabber  vidGrabber;
 	ofImage mask;

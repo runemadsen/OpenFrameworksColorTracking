@@ -19,7 +19,33 @@ void testApp::update()
 
 void testApp::draw() 
 {	
+	ofSetColor(255, 255, 255);
+	
 	cells->draw();
+	
+	// draw grid
+	/*float gx = Sensing::getInstance()->getGridX();
+	float gy = Sensing::getInstance()->getGridY();
+	float gw = Sensing::getInstance()->getGridWidth();
+	float gh = Sensing::getInstance()->getGridHeight();
+	float mul = 0.04;
+	
+	
+	//ofSetColor(255, 255, 255);
+	ofFill();
+	//ofRect(gx, gy, gw, gh);
+	
+	ofSetColor(150, 150, 150);
+	ofRect(gx, gy, gw * mul, gh);
+	ofRect(gx + (gw / 3), gy, gw * mul, gh);
+	ofRect(gx + 2 * (gw / 3), gy, gw * mul, gh);
+	
+	ofRect(gx, gy, gw, gh * mul);
+	ofRect(gx, gy + (gw / 3), gw, gh * mul);
+	ofRect(gx, gy  + 2 * (gw / 3), gw, gh * mul);
+	
+	// end grid*/
+	
 	
 	Sensing::getInstance()->draw();
 	

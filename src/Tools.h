@@ -6,7 +6,7 @@ class Color
 {
 public:
 	
-	float hue, sat;
+	float hue, sat, bri;
 	ofxVec2f pos;
 };
 

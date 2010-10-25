@@ -21,7 +21,10 @@ Sensing::Sensing()
 	threshold = 0;
 	blurAmount = 0;
 	area = 100;
-	hueMargin = 15;
+	hueMarginLow = 15;
+	hueMarginHigh = 15;
+	briMarginLow = 50;
+	briMarginHigh = 50;
 	satMarginLow = 50;
 	satMarginHigh = 170;
 	cellWidth = 197;
@@ -32,6 +35,11 @@ Sensing::Sensing()
 	ratioY = 2.55;
 	displaceX = 0;
 	displaceY = -62;
+	
+	gridWidth = 775.781;
+	gridHeight = 771.68;
+	gridX = 148.828;
+	gridY = 12.1094;
 	
 	show = false;
 	showGrabScreen = false;
@@ -64,10 +72,13 @@ Sensing::Sensing()
 	gui.addSlider("Threshold", threshold , 0.0, 255);
 	gui.addSlider("Bluring", blurAmount , 0, 40);
 	gui.addContent("Difference", grayImg);
-	gui.addSlider("Area",area,10,6000);	
-	gui.addSlider("Hue Margin", hueMargin , 0, 200);
+	gui.addSlider("Area",area,1,300);	
+	gui.addSlider("Hue Margin Low", hueMarginLow , 0, 200);
+	gui.addSlider("Hue Margin High", hueMarginHigh , 0, 200);
 	gui.addSlider("Sat Margin Low", satMarginLow , 0, 200);
 	gui.addSlider("Sat Margin High", satMarginHigh , 0, 500);
+	gui.addSlider("Bri Margin Low", briMarginLow , 0, 200);
+	gui.addSlider("Bri Margin High", briMarginHigh , 0, 200);
 	gui.addToggle("Mask", maskToggle);
 	gui.addToggle("Debug", debugToggle);
 	gui.addSlider("Cell Width", cellWidth , 50, 500);
@@ -77,6 +88,10 @@ Sensing::Sensing()
 	gui.addSlider("ratioY", ratioY , 0.5, 6.0);
 	gui.addSlider("Displace Origin X", displaceX , -800, 800);
 	gui.addSlider("Displace Origin Y", displaceY , -800, 800);
+	gui.addSlider("Grid width", gridWidth , 300, 1000);
+	gui.addSlider("Grid height", gridHeight, 300, 1000);
+	gui.addSlider("Grid X", gridX , -400, 600);
+	gui.addSlider("Grid Y", gridY, -400, 600);
 	gui.show();
 	
 	for (int i=0; i<VIDEO_WIDTH*VIDEO_HEIGHT; i++) 
@@ -120,14 +135,15 @@ void Sensing::update()
 		briImg.flagImageChanged();
         
 		// grayImg should get the red image
-		
 		unsigned char * huePixels = hueImg.getPixels();                         
-		unsigned char * satPixels = satImg.getPixels();                        
+		unsigned char * satPixels = satImg.getPixels();  
+		unsigned char * briPixels = briImg.getPixels();
 		
 		for (int i = 0; i < VIDEO_WIDTH * VIDEO_HEIGHT; i++)
 		{                                          
-			if ((huePixels[i] >= trackColor.hue - hueMargin && huePixels[i] <= trackColor.hue + hueMargin) &&    
-				(satPixels[i] >= trackColor.sat - satMarginLow && satPixels[i] <= trackColor.sat + satMarginHigh))
+			if ((huePixels[i] >= trackColor.hue - hueMarginLow && huePixels[i] <= trackColor.hue + hueMarginHigh) &&    
+				(satPixels[i] >= trackColor.sat - satMarginLow && satPixels[i] <= trackColor.sat + satMarginHigh) &&
+				(briPixels[i] >= trackColor.bri - briMarginLow && briPixels[i] <= trackColor.bri + briMarginHigh)
 			{    
 				grayPixels[i] = 255;                                      
 			} 
@@ -190,14 +206,16 @@ void Sensing::grabColorFromVideo(int x, int y)
 	{
 		unsigned char * huePixels = hueImg.getPixels();  
 		unsigned char * satPixels = satImg.getPixels();
+		unsigned char * briPixels = briImg.getPixels();
 		
 		x = MIN(x,hueImg.width-1);
 		y = MIN(y,hueImg.height-1);
 		
 		trackColor.hue = huePixels[x+(y*hueImg.width)];  
 		trackColor.sat = satPixels[x+(y*satImg.width)]; 
+		trackColor.bri = briPixels[x+(y*satImg.width)];
 		
-		cout << "New Color > Hue: " << trackColor.hue << " Sat: " << trackColor.sat << endl ;
+		cout << "New Color > Hue: " << trackColor.hue << " Sat: " << trackColor.sat << " Bri: " << trackColor.bri << endl;
 	}
 }
 
@@ -237,21 +255,26 @@ void Sensing::calibrateVar(string variable, float addNum)
 
 void Sensing::printConfig()
 {
-	cout << "threshold = " << threshold << endl;
-	cout << "blurAmount = " << blurAmount << endl;
-	cout << "area = " << area << endl;
-	cout << "hueMargin = " << hueMargin << endl;
-	cout << "satMarginLow = " << satMarginLow << endl;
-	cout << "satMarginHigh = " << satMarginHigh << endl;
+	cout << "threshold = " << threshold << ";" << endl;
+	cout << "blurAmount = " << blurAmount << ";" << endl;
+	cout << "area = " << area << ";" << endl;
+	cout << "hueMargin = " << hueMargin << ";" << endl;
+	cout << "satMarginLow = " << satMarginLow << ";" << endl;
+	cout << "satMarginHigh = " << satMarginHigh << ";" << endl;
 	
-	cout << "cellWidth = " << cellWidth << endl;
-	cout << "cellHeight = " << cellHeight << endl;
-	cout << "cellMarginX = " << cellMarginX << endl;
-	cout << "cellMarginY = " << cellMarginY << endl;
+	cout << "cellWidth = " << cellWidth << ";" << endl;
+	cout << "cellHeight = " << cellHeight << ";" << endl;
+	cout << "cellMarginX = " << cellMarginX << ";" << endl;
+	cout << "cellMarginY = " << cellMarginY << ";" << endl;
 	
-	cout << "ratioX = " << ratioX << endl;
-	cout << "ratioY = " << ratioY << endl;
-	cout << "displaceX = " << displaceX << endl;
-	cout << "displaceY = " << displaceY << endl;
+	cout << "ratioX = " << ratioX << ";" << endl;
+	cout << "ratioY = " << ratioY << ";" << endl;
+	cout << "displaceX = " << displaceX << ";" << endl;
+	cout << "displaceY = " << displaceY << ";" << endl;
+	
+	cout << "gridWidth = " << gridWidth << ";" << endl;
+	cout << "gridHeight = " << gridHeight << ";" << endl;
+	cout << "gridX = " << gridX << ";" << endl;
+	cout << "gridY = " << gridY << ";" << endl;
 }
 

@@ -55,4 +55,20 @@
         <name>Displace Origin Y</name>
         <value>-62.000000</value>
     </SliderFloat_Displace_Origin_Y>
+    <SliderFloat_Grid_width>
+        <name>Grid width</name>
+        <value>775.781006</value>
+    </SliderFloat_Grid_width>
+    <SliderFloat_Grid_height>
+        <name>Grid height</name>
+        <value>771.679993</value>
+    </SliderFloat_Grid_height>
+    <SliderFloat_Grid_X>
+        <name>Grid X</name>
+        <value>148.828003</value>
+    </SliderFloat_Grid_X>
+    <SliderFloat_Grid_Y>
+        <name>Grid Y</name>
+        <value>12.109400</value>
+    </SliderFloat_Grid_Y>
 </controls>
