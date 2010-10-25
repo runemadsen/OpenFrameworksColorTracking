@@ -61,4 +61,6 @@ private:
 	float _ratioY;
 	
 	ofVideoPlayer _mov;
+	
+	vector <int> delCellNums;
 };

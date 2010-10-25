@@ -18,54 +18,53 @@ Sensing * Sensing::getInstance()
 
 Sensing::Sensing()
 {
+	trackColor.hue = 35;
+	trackColor.sat = 73;
+	trackColor.bri = 59;
 	threshold = 0;
 	blurAmount = 0;
-	area = 100;
-	hueMarginLow = 15;
-	hueMarginHigh = 15;
-	briMarginLow = 50;
-	briMarginHigh = 50;
-	satMarginLow = 50;
-	satMarginHigh = 170;
+	area = 30;
+	hueMarginLow = 19;
+	hueMarginHigh = 60;
+	satMarginLow = 67;
+	satMarginHigh = 173;
+	briMarginLow = 31;
+	briMarginHigh = 99;
 	cellWidth = 197;
 	cellHeight = 198;
 	cellMarginX = 0;
 	cellMarginY = 0;
-	ratioX = 2.54;
-	ratioY = 2.55;
-	displaceX = 0;
-	displaceY = -62;
-	
+	ratioX = 2.5;
+	ratioY = 2.51;
+	displaceX = -3;
+	displaceY = -15;
 	gridWidth = 775.781;
 	gridHeight = 771.68;
 	gridX = 148.828;
-	gridY = 12.1094;
+	gridY = 12.1094;	
 	
 	show = false;
 	showGrabScreen = false;
 	maskToggle = true;
 	debugToggle = false;
 	
-	trackColor.hue = 80;
-	trackColor.sat = 135;
+	colorImg.allocate( CAM_WIDTH, CAM_HEIGHT );
+	colorImgHSV.allocate(CAM_WIDTH, CAM_HEIGHT);  
 	
-	colorImg.allocate( VIDEO_WIDTH, VIDEO_HEIGHT );
-	colorImgHSV.allocate(VIDEO_WIDTH, VIDEO_HEIGHT);  
+	hueImg.allocate(CAM_WIDTH, CAM_HEIGHT);
+    satImg.allocate(CAM_WIDTH, CAM_HEIGHT);
+    briImg.allocate(CAM_WIDTH, CAM_HEIGHT);
 	
-	hueImg.allocate(VIDEO_WIDTH, VIDEO_HEIGHT);
-    satImg.allocate(VIDEO_WIDTH, VIDEO_HEIGHT);
-    briImg.allocate(VIDEO_WIDTH, VIDEO_HEIGHT);
+	grayPixels = new unsigned char [CAM_WIDTH * CAM_HEIGHT]; 
 	
-	grayPixels = new unsigned char [VIDEO_WIDTH * VIDEO_HEIGHT]; 
-	
-	grayImg.allocate( VIDEO_WIDTH, VIDEO_HEIGHT );
-	outputTexture.allocate(VIDEO_WIDTH, VIDEO_HEIGHT, GL_RGB);
+	grayImg.allocate( CAM_WIDTH, CAM_HEIGHT );
+	outputTexture.allocate(CAM_WIDTH, CAM_HEIGHT, GL_RGB);
 	
 	mask.loadImage("mask.png");
 	mask.setImageType(OF_IMAGE_GRAYSCALE);
 	maskPixels = mask.getPixels();
 	
-    trackedTextureRed.allocate(VIDEO_WIDTH, VIDEO_HEIGHT, GL_LUMINANCE);
+    trackedTextureRed.allocate(CAM_WIDTH, CAM_HEIGHT, GL_LUMINANCE);
 	
 	gui.addTitle("Input");
 	gui.addContent("Input", outputTexture);
@@ -94,7 +93,7 @@ Sensing::Sensing()
 	gui.addSlider("Grid Y", gridY, -400, 600);
 	gui.show();
 	
-	for (int i=0; i<VIDEO_WIDTH*VIDEO_HEIGHT; i++) 
+	for (int i=0; i<CAM_WIDTH*CAM_HEIGHT; i++) 
 	{
 		if (maskPixels[i]!=0){
 			maskPixels[i]==1;			
@@ -102,7 +101,7 @@ Sensing::Sensing()
 	}
 	
 	vidGrabber.setDeviceID(6);
-	vidGrabber.initGrabber(VIDEO_WIDTH, VIDEO_HEIGHT );
+	vidGrabber.initGrabber(CAM_WIDTH, CAM_HEIGHT );
 }
 
 /* Set listener
@@ -139,11 +138,11 @@ void Sensing::update()
 		unsigned char * satPixels = satImg.getPixels();  
 		unsigned char * briPixels = briImg.getPixels();
 		
-		for (int i = 0; i < VIDEO_WIDTH * VIDEO_HEIGHT; i++)
+		for (int i = 0; i < CAM_WIDTH * CAM_HEIGHT; i++)
 		{                                          
 			if ((huePixels[i] >= trackColor.hue - hueMarginLow && huePixels[i] <= trackColor.hue + hueMarginHigh) &&    
 				(satPixels[i] >= trackColor.sat - satMarginLow && satPixels[i] <= trackColor.sat + satMarginHigh) &&
-				(briPixels[i] >= trackColor.bri - briMarginLow && briPixels[i] <= trackColor.bri + briMarginHigh)
+				(briPixels[i] >= trackColor.bri - briMarginLow && briPixels[i] <= trackColor.bri + briMarginHigh))
 			{    
 				grayPixels[i] = 255;                                      
 			} 
@@ -155,13 +154,13 @@ void Sensing::update()
 		
 		if (maskToggle) 
 		{
-			for (int i=0; i<VIDEO_WIDTH*VIDEO_HEIGHT; i++) 
+			for (int i=0; i<CAM_WIDTH*CAM_HEIGHT; i++) 
 			{
 				grayPixels[i]=maskPixels[i]&&grayPixels[i]; 
 			}
 		}
 		
-		grayImg.setFromPixels(grayPixels, VIDEO_WIDTH,VIDEO_HEIGHT);
+		grayImg.setFromPixels(grayPixels, CAM_WIDTH,CAM_HEIGHT);
 		
 		grayImg.blur( blurAmount );
         grayImg.threshold( threshold );
@@ -197,7 +196,7 @@ void Sensing::draw()
 	}
 }
 
-/* Grab color fro video
+/* Grab color fro CAM
  ___________________________________________________________ */
 
 void Sensing::grabColorFromVideo(int x, int y)
@@ -214,8 +213,6 @@ void Sensing::grabColorFromVideo(int x, int y)
 		trackColor.hue = huePixels[x+(y*hueImg.width)];  
 		trackColor.sat = satPixels[x+(y*satImg.width)]; 
 		trackColor.bri = briPixels[x+(y*satImg.width)];
-		
-		cout << "New Color > Hue: " << trackColor.hue << " Sat: " << trackColor.sat << " Bri: " << trackColor.bri << endl;
 	}
 }
 
@@ -255,12 +252,20 @@ void Sensing::calibrateVar(string variable, float addNum)
 
 void Sensing::printConfig()
 {
+	cout << "trackColor.hue = " << trackColor.hue << ";" << endl;
+	cout << "trackColor.sat = " << trackColor.sat << ";" << endl;
+	cout << "trackColor.bri = " << trackColor.bri << ";" << endl;
+	
 	cout << "threshold = " << threshold << ";" << endl;
 	cout << "blurAmount = " << blurAmount << ";" << endl;
 	cout << "area = " << area << ";" << endl;
-	cout << "hueMargin = " << hueMargin << ";" << endl;
+	cout << "hueMarginLow = " << hueMarginLow << ";" << endl;
+	cout << "hueMarginHigh = " << hueMarginHigh << ";" << endl;
 	cout << "satMarginLow = " << satMarginLow << ";" << endl;
 	cout << "satMarginHigh = " << satMarginHigh << ";" << endl;
+	cout << "briMarginLow = " << briMarginLow << ";" << endl;
+	cout << "briMarginHigh = " << briMarginHigh << ";" << endl;
+
 	
 	cout << "cellWidth = " << cellWidth << ";" << endl;
 	cout << "cellHeight = " << cellHeight << ";" << endl;

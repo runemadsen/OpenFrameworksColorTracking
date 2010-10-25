@@ -62,7 +62,8 @@ private:
 	int blurAmount;
 	int area;
 	int hueMarginLow;
-	int satMarginHigh;
+	int hueMarginHigh;
+	int satMarginLow;
 	int satMarginHigh;
 	int briMarginLow;
 	int briMarginHigh;

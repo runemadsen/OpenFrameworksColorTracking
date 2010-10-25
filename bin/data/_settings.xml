@@ -9,20 +9,32 @@
     </SliderInt_Bluring>
     <SliderInt_Area>
         <name>Area</name>
-        <value>100</value>
+        <value>30</value>
     </SliderInt_Area>
-    <SliderInt_Hue_Margin>
-        <name>Hue Margin</name>
-        <value>15</value>
-    </SliderInt_Hue_Margin>
+    <SliderInt_Hue_Margin_Low>
+        <name>Hue Margin Low</name>
+        <value>19</value>
+    </SliderInt_Hue_Margin_Low>
+    <SliderInt_Hue_Margin_High>
+        <name>Hue Margin High</name>
+        <value>60</value>
+    </SliderInt_Hue_Margin_High>
     <SliderInt_Sat_Margin_Low>
         <name>Sat Margin Low</name>
-        <value>50</value>
+        <value>67</value>
     </SliderInt_Sat_Margin_Low>
     <SliderInt_Sat_Margin_High>
         <name>Sat Margin High</name>
-        <value>170</value>
+        <value>173</value>
     </SliderInt_Sat_Margin_High>
+    <SliderInt_Bri_Margin_Low>
+        <name>Bri Margin Low</name>
+        <value>31</value>
+    </SliderInt_Bri_Margin_Low>
+    <SliderInt_Bri_Margin_High>
+        <name>Bri Margin High</name>
+        <value>99</value>
+    </SliderInt_Bri_Margin_High>
     <Toggle_Mask>
         <name>Mask</name>
         <value>1</value>
@@ -41,19 +53,19 @@
     </SliderInt_Cell_Height>
     <SliderFloat_ratioX>
         <name>ratioX</name>
-        <value>2.540000</value>
+        <value>2.500000</value>
     </SliderFloat_ratioX>
     <SliderFloat_ratioY>
         <name>ratioY</name>
-        <value>2.550000</value>
+        <value>2.510000</value>
     </SliderFloat_ratioY>
     <SliderFloat_Displace_Origin_X>
         <name>Displace Origin X</name>
-        <value>0.000000</value>
+        <value>-3.000000</value>
     </SliderFloat_Displace_Origin_X>
     <SliderFloat_Displace_Origin_Y>
         <name>Displace Origin Y</name>
-        <value>-62.000000</value>
+        <value>-15.000000</value>
     </SliderFloat_Displace_Origin_Y>
     <SliderFloat_Grid_width>
         <name>Grid width</name>

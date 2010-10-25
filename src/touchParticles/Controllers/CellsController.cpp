@@ -7,7 +7,7 @@ CellsController::CellsController()
 {
 	updateRatio();
 	
-	_mov.loadMovie("fingers.mov");
+	_mov.loadMovie("cropped2.mov");
 	_mov.play();
 }
 
@@ -70,44 +70,67 @@ void CellsController::draw()
 
 void CellsController::blobOn(ofxCvTrackedBlob& blob)
 {
+	cout << "Blob on" << endl;
+	
 	if(_cells.size() < NUM_CELLS)
 	{
-		VideoCell * cell = new VideoCell(blob);
+		cout << "Cell created" << endl;
 		
-		// loop through cell nums
+		VideoCell * cell = new VideoCell(blob);
+		_cells.push_back(cell);
+		
+		// first rty deleted nums
+		if(delCellNums.size() > 0)
+		{
+			cout << "Got deleted cell num: " << delCellNums[0] << endl;
+			cell->setCellNum(delCellNums[0]);
+			delCellNums.erase(delCellNums.begin());
+			
+			return;
+		}
+		
+		// else try all numbers
 		for(int i = 0; i < NUM_CELLS; i++)
 		{
 			bool isThere = false;
+			
+			cout << "Trying cell num: " << i;
 			
 			// loop through cells
 			for(int j = 0; j < _cells.size(); j++)
 			{
 				if(i == _cells[j]->getCellNum())
 				{
+					cout << ", Not Good" << endl;
 					isThere = true;
 					break;
 				}
 			}
 			
-			// if cellnum is now in cells already
+			// if cellnum is not in cells already
 			if(!isThere)
 			{
+				cout << ", GOOD" << endl;
 				cell->setCellNum(i);
 				break;
 			}
 		}
-		
-		_cells.push_back(cell);
 	}
 }
 
 void CellsController::blobOff(int blobid)
 {
+	cout << "Blob off" << endl;
+	
 	for(int i = 0; i < _cells.size(); i++)
 	{
 		if (_cells[i]->getId() == blobid) 
 		{
-			_cells.erase (_cells.begin()+i);	
+			delCellNums.push_back(_cells[i]->getCellNum());
+			
+			cout << "Cell Deleted: " << _cells[i]->getCellNum() << endl;
+			
+			_cells.erase (_cells.begin()+i);
 		}
 	}
 }
@@ -120,7 +143,15 @@ void CellsController::assignBlobsToCells()
 {
 	//findOrder();
 	
-	setRandom();
+	//setRandom();
+	
+	_cells.clear();
+	delCellNums.clear();
+	
+	for(int i = 0; i < Sensing::getInstance()->blobTracker.blobs.size(); i++)
+	{
+		blobOn(Sensing::getInstance()->blobTracker.blobs[i]);
+	}
 }
 
 void CellsController::findOrder()
