@@ -38,6 +38,8 @@ public:
 	float getDisplaceX() { return displaceX; }
 	float getDisplaceY() { return displaceY; }
 	
+	void calibrateVar(string variable, float addNum);
+	
 private:
 	
 	// singleton stuff

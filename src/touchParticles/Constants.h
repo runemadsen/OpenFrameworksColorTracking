@@ -1,8 +1,6 @@
 /* Setup
 _______________________________________________________________________ */
 
-#define DEBUG true
-
 #define NUM_ROWS 3
 #define NUM_COLS 3
 #define GRID_SIZE 9

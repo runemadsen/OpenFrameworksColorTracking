@@ -87,7 +87,9 @@ void CellsController::blobOff(int blobid)
 
 void CellsController::assignBlobsToCells()
 {
-	findOrder();
+	//findOrder();
+	
+	setRandom();
 }
 
 void CellsController::findOrder()
@@ -121,9 +123,27 @@ void CellsController::findOrder()
 		{
 			if(objects[i].id == _cells[j]->getId())
 			{
-				_cells[j]->setOrder(i);
+				_cells[j]->setCellNum(i);
 			}
 		}
+	}
+}
+
+void CellsController::setRandom()
+{
+	vector <int> cellNums;
+	for(int i = 0; i < _cells.size(); i++)
+	{
+		cellNums.push_back(i);
+	}
+	
+	for(int i = 0; i < _cells.size(); i++)
+	{
+		int randomIndex = ofRandom(0, cellNums.size());
+		
+		_cells[i]->setCellNum(cellNums[randomIndex]);
+		
+		cellNums.erase(cellNums.begin() + randomIndex);
 	}
 }
 

@@ -21,19 +21,19 @@ Sensing::Sensing()
 	threshold = 0;
 	blurAmount = 0;
 	area = 100;
-	hueMargin = 12;
-	satMarginLow = 100;
-	satMarginHigh = 200;
+	hueMargin = 15;
+	satMarginLow = 50;
+	satMarginHigh = 170;
 	
 	cellWidth = 100;
 	cellHeight = 100;
 	cellMarginX = 0;
 	cellMarginY = 0;
 	
-	ratioX = 1.5;
-	ratioY = 1.5;
-	displaceX = 0;
-	displaceY = 0;
+	ratioX = 2.54;
+	ratioY = 2.59;
+	displaceX = 10;
+	displaceY = -15;
 	
 	show = false;
 	showGrabScreen = false;
@@ -110,7 +110,7 @@ void Sensing::update()
 	if( vidGrabber.isFrameNew() ) 
 	{
         colorImg = vidGrabber.getPixels();
-        //colorImg.mirror( false, true );
+        colorImg.mirror(false, false );
 		
 		colorImgHSV = colorImg;                                                 
 		colorImgHSV.convertRgbToHsv();                                          
@@ -224,5 +224,16 @@ int Sensing::getCellWidth()
 int Sensing::getCellHeight()
 {
 	return cellHeight;
+}
+
+void Sensing::calibrateVar(string variable, float addNum)
+{
+	
+	if(variable == "x")				displaceX += addNum;
+	else if(variable == "y")		displaceY += addNum;
+	else if(variable == "ratiox")	ratioX += addNum;
+	else if(variable == "ratioy")	ratioY += addNum;
+	else if(variable == "cellwidth")	cellWidth += addNum;
+	else if(variable == "cellheight")	cellHeight += addNum;
 }
 

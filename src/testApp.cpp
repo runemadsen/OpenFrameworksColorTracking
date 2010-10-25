@@ -35,7 +35,19 @@ void testApp::draw()
 
 void testApp::keyPressed( int key ) 
 {
-    if (key =='f' || key=='F') 
+	if(key == 'x')		Sensing::getInstance()->calibrateVar("x", -1);
+	else if(key == 'X')		Sensing::getInstance()->calibrateVar("x", 1);
+	else if(key == 'y')		Sensing::getInstance()->calibrateVar("y", -1);
+	else if(key == 'Y')		Sensing::getInstance()->calibrateVar("y", 1);
+	else if(key == 'w')		Sensing::getInstance()->calibrateVar("ratiox", -0.01);
+	else if(key == 'W')		Sensing::getInstance()->calibrateVar("ratiox", 0.01);
+	else if(key == 'h')		Sensing::getInstance()->calibrateVar("ratioy", -0.01);
+	else if(key == 'H')		Sensing::getInstance()->calibrateVar("ratioy", 0.01);
+	else if(key == 'c')		Sensing::getInstance()->calibrateVar("cellwidth", -1);
+	else if(key == 'C')		Sensing::getInstance()->calibrateVar("cellwidth", 1);
+	else if(key == 'v')		Sensing::getInstance()->calibrateVar("cellheight", -1);
+	else if(key == 'V')		Sensing::getInstance()->calibrateVar("cellheight", 1);
+    else if (key =='f' || key=='F') 
 	{
 		ofToggleFullscreen();
 	} 

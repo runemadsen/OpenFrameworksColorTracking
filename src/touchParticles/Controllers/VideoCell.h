@@ -19,14 +19,14 @@ public:
 	void drawDebug();
 	
 	int getId();
-	void setOrder(int order);
+	void setCellNum(int order);
 	
 	ofPoint getCentroid();
 	
 private:
 	
 	int _id;
-	int _order;
+	int _cellNum;
 	ofColor _color;
 	
 	float _texCoords[8];

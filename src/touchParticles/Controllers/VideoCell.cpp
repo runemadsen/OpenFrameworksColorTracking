@@ -52,12 +52,17 @@ void VideoCell::drawDebug()
 	x += Sensing::getInstance()->getDisplaceX();
 	y += Sensing::getInstance()->getDisplaceY();
 	
-	ofSetColor(_color.r, _color.g, _color.b);
+	ofFill();
+	ofSetColor(255, 255, 255);
 	ofRect(x, y, 10, 10);
 	
 	ofSetColor(255, 255, 255);
+	ofNoFill();
+	ofRect(x, y, Sensing::getInstance()->getCellWidth(), Sensing::getInstance()->getCellHeight());
 	
-	string message = "Id: " + ofToString(_id, 0) + " Order: " + ofToString(_order, 0);
+	ofSetColor(255, 255, 255);
+	
+	string message = "Id: " + ofToString(_id, 0) + " Order: " + ofToString(_cellNum, 0);
 	
 	ofDrawBitmapString(message, x, y);
 }
@@ -75,14 +80,14 @@ ofPoint VideoCell::getCentroid()
 	return _centroid;
 }
 
-void VideoCell::setOrder(int order)
+void VideoCell::setCellNum(int cellNum)
 {
-	_order = order;
+	_cellNum = cellNum;
 	
 	// use order to set position in video texture
 	
-	int col = _order % NUM_COLS;
-	int row = order / NUM_ROWS;
+	int col = _cellNum % NUM_COLS;
+	int row = _cellNum / NUM_ROWS;
 	
 	int cellWidth = VIDEO_WIDTH / NUM_ROWS;
 	int cellHeight = VIDEO_HEIGHT / NUM_COLS;

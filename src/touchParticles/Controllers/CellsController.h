@@ -51,6 +51,7 @@ public:
 private:
 	
 	void findOrder();
+	void setRandom();
 	
 	void updateRatio();
 	

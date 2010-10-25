@@ -13,15 +13,15 @@
     </SliderInt_Area>
     <SliderInt_Hue_Margin>
         <name>Hue Margin</name>
-        <value>12</value>
+        <value>15</value>
     </SliderInt_Hue_Margin>
     <SliderInt_Sat_Margin_Low>
         <name>Sat Margin Low</name>
-        <value>100</value>
+        <value>50</value>
     </SliderInt_Sat_Margin_Low>
     <SliderInt_Sat_Margin_High>
         <name>Sat Margin High</name>
-        <value>200</value>
+        <value>170</value>
     </SliderInt_Sat_Margin_High>
     <Toggle_Mask>
         <name>Mask</name>
@@ -29,7 +29,7 @@
     </Toggle_Mask>
     <Toggle_Debug>
         <name>Debug</name>
-        <value>0</value>
+        <value>1</value>
     </Toggle_Debug>
     <SliderInt_Cell_Width>
         <name>Cell Width</name>
@@ -41,18 +41,18 @@
     </SliderInt_Cell_Height>
     <SliderFloat_ratioX>
         <name>ratioX</name>
-        <value>5.763672</value>
+        <value>2.540000</value>
     </SliderFloat_ratioX>
     <SliderFloat_ratioY>
         <name>ratioY</name>
-        <value>2.712891</value>
+        <value>2.590000</value>
     </SliderFloat_ratioY>
     <SliderFloat_Displace_Origin_X>
         <name>Displace Origin X</name>
-        <value>87.500000</value>
+        <value>10.000000</value>
     </SliderFloat_Displace_Origin_X>
     <SliderFloat_Displace_Origin_Y>
         <name>Displace Origin Y</name>
-        <value>256.250000</value>
+        <value>-15.000000</value>
     </SliderFloat_Displace_Origin_Y>
 </controls>
